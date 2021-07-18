@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+
+
+void guardarDatos (float matriz[][10], int f, int c);
+void multiplicar (float m1[][10], float m2[][10], float resultado[][10], int f1, int f2, int c1, int c2);
+void printMatriz (float matriz[][10], int fila, int colu);
+void cuentaFachera();
+void sigoMultiplicandoCheck();
+//THERE IS AN ERROR THAT MAKES THE PROGRAM GO CRAZY IF YOU INPUT A VALUE OF A DIFFERENT TYPE OF THE REQUESTED ONE
+
+int main()
+{
+    cuentaFachera();
+    sigoMultiplicandoCheck();
+    getch();
+    return 0;
+}
+//////////////////////////////////////////////INPUT THE VALUES OF THE MATRIX
+void guardarDatos (float matriz[][10], int f, int c){
+    for(int i=0; i<f; i++){
+        for(int j=0l; j<c;j++){
+            printf("Input a value %d-%d: ", i+1, j+1);
+            scanf("%f", &matriz[i][j]);
+        }
+    }
+}
+//////////////////////////////////////////////MULTIPLY MATRIX
+void multiplicar (float m1[][10], float m2[][10], float resultado[][10], int f1, int f2, int c1, int c2){
+    for(int i=0; i<f1; i++){
+        for(int j=0; j<c2; j++){
+            resultado[i][j] = 0;
+        }
+    }
+    for(int i=0; i<f1;i++){
+        for(int j=0; j<c2; j++){
+            for(int n=0; n<f2;n++){
+                resultado[i][j]+= m1[i][n]*m2[n][j];
+            }
+        }
+    }
+}
+//////////////////////////////////////////////PRINT MATRIX
+void printMatriz (float matriz[][10], int fila, int colu){
+    for (int i= 0; i < fila; i++){
+        printf("| ");
+        for (int j= 0; j<colu; j++){
+            printf(" %.2f ", matriz[i][j]);
+            if (j == colu - 1)
+            printf("|\n");
+        }
+    }
+}
+//////////////////////////////////////////////DEVELOPMENT
+void cuentaFachera(){
+    float m1[10][10], m2[10][10], resultado[10][10];
+    int f1,f2,c1,c2;
+    printMatriz (resultado, f1, c2);
+    printf("Input the number of rows of the first matrix: \n");
+    scanf("%d", &f1);
+    printf("Input the number of columns of the first matrix: \n");
+    scanf("%d", &c1);
+    printf("First matrix: %dx%d\n\n", f1,c1);
+
+    printf("Input the number of rows of the second matrix: \n");
+    scanf("%d", &f2);
+    while(f2!=c1){
+		printf("%d is not a valid value. Input a valid value.  ", f2);
+		scanf("%d", &f2);
+	}
+	printf("Input the number of columns of the second matrix: \n");
+    scanf("%d", &c2);
+    printf("Second matrix: %dx%d\n\n", f2,c2);
+    printf("\nFIRST METRIX\n");
+    guardarDatos (m1, f1, c1);
+    printf("\nSECOND MATRIX\n");
+    guardarDatos (m2, f2, c2);
+
+
+    multiplicar (m1, m2, resultado, f1, f2, c1, c2);
+    printMatriz (resultado, f1, c2);
+}
+//////////////////////////////////////////////EXIT O AGAIN
+void sigoMultiplicandoCheck(){
+    char opcion = " ";
+    do{
+    printf("Do you want to do another multiplication? (y or n)  ");
+    scanf("%s", &opcion);
+
+        switch(opcion){
+            case 'y':
+                system("cls");
+                cuentaFachera();
+                break;
+            case 'n':
+                printf("Press any button to exit.");
+                break;
+            default:
+                printf("Input a valid value.\n");
+                break;
+
+        }
+    }while(opcion != 'n' );
+}
